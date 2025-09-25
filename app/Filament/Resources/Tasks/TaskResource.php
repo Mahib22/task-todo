@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Tasks;
 
+use App\Filament\Resources\Tasks\Pages\ListTaskActivities;
 use App\Filament\Resources\Tasks\Pages\ManageTasks;
 use App\Models\Task;
 use App\Models\User;
 use BackedEnum;
 use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
@@ -69,6 +71,10 @@ class TaskResource extends Resource
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+                Action::make('activities')
+                    ->url(fn($record) => TaskResource::getUrl('activities', ['record' => $record]))
+                    ->icon('heroicon-o-eye')
+                    ->color('gray')
             ]);
     }
 
@@ -76,6 +82,7 @@ class TaskResource extends Resource
     {
         return [
             'index' => ManageTasks::route('/'),
+            'activities' => ListTaskActivities::route('/{record}/activities'),
         ];
     }
 }

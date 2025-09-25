@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\UserPositions;
 
+use App\Filament\Resources\UserPositions\Pages\ListUserPositionActivities;
 use App\Filament\Resources\UserPositions\Pages\ManageUserPositions;
 use App\Models\Position;
 use App\Models\User;
 use App\Models\UserPosition;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
@@ -79,6 +81,10 @@ class UserPositionResource extends Resource
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+                Action::make('activities')
+                    ->url(fn($record) => UserPositionResource::getUrl('activities', ['record' => $record]))
+                    ->icon('heroicon-o-eye')
+                    ->color('gray')
             ]);
     }
 
@@ -86,6 +92,7 @@ class UserPositionResource extends Resource
     {
         return [
             'index' => ManageUserPositions::route('/'),
+            'activities' => ListUserPositionActivities::route('/{record}/activities'),
         ];
     }
 }

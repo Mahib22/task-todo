@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Users;
 
+use App\Filament\Resources\Users\Pages\ListUserActivities;
 use App\Filament\Resources\Users\Pages\ManageUsers;
 use App\Models\User;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
@@ -61,6 +63,10 @@ class UserResource extends Resource
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+                Action::make('activities')
+                    ->url(fn($record) => UserResource::getUrl('activities', ['record' => $record]))
+                    ->icon('heroicon-o-eye')
+                    ->color('gray')
             ]);
     }
 
@@ -68,6 +74,7 @@ class UserResource extends Resource
     {
         return [
             'index' => ManageUsers::route('/'),
+            'activities' => ListUserActivities::route('/{record}/activities'),
         ];
     }
 }
