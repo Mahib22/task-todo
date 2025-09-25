@@ -22,4 +22,14 @@ class UserPosition extends Model
             }
         });
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'uuid');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id', 'uuid');
+    }
 }

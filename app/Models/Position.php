@@ -22,9 +22,4 @@ class Position extends Model
             }
         });
     }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'user_positions', 'position_id', 'user_id', 'uuid', 'uuid');
-    }
 }
