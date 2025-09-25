@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Positions;
 
+use App\Filament\Resources\Positions\Pages\ListPositionActivities;
 use App\Filament\Resources\Positions\Pages\ManagePositions;
 use App\Models\Position;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
@@ -42,6 +44,10 @@ class PositionResource extends Resource
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+                Action::make('activities')
+                    ->url(fn($record) => PositionResource::getUrl('activities', ['record' => $record]))
+                    ->icon('heroicon-o-eye')
+                    ->color('gray')
             ]);
     }
 
@@ -49,6 +55,7 @@ class PositionResource extends Resource
     {
         return [
             'index' => ManagePositions::route('/'),
+            'activities' => ListPositionActivities::route('/{record}/activities'),
         ];
     }
 }
